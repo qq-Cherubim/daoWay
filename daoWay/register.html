@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <style type="text/css">
+
+        .container{
+            margin-top:13%
+        }
+        .login{
+            width: 330px;
+            /*height: 397px;*/
+            margin:0 auto;
+            border: 1px solid #ccc;
+            padding:15px;
+            border-radius: 5px;
+
+        }
+        .login h2{
+            width: 298px;
+            height: 70px;
+            background: url('img/houtai-logo.png') center no-repeat;
+            -webkit-background-size:100% 100%;
+            background-size:100% 72%;
+        }
+        .content{
+            width: 298px;
+            /*height: 207px;*/
+            margin:0 auto;
+        }
+        .input-group input{
+            height:52px;
+            font-family: "Microsoft YaHei","SimSun"!important;
+            font-size:16px
+        }
+        .loginBtn,.alertMsg{
+            font-family: "Microsoft YaHei","SimSun"!important;
+        }
+        .already{
+            padding-top:20px;
+            font-family: "Microsoft YaHei","SimSun"!important;
+        }
+        .already a{
+            margin : 0 33%
+        }
+        .content input {
+            height:50px;
+            margin-bottom:10px
+        }
+        .J_codeimg{
+            color:#fff;
+            width:200px;
+            height:36px;
+            padding:3px;
+            z-index:0;
+            background:#e8e8e8;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="container">
+        <div class="login">
+            <!--验证码-->
+        <!--   <div class="content">
+                <h2></h2>
+                &lt;!&ndash;手机号&ndash;&gt;
+                <input type="text" class="form-control" placeholder="请输入手机号">
+                <div class="input-group" style="margin-bottom: 10px">
+                    <img style="height:50px;width: 100%;border: 1px solid #ccc;" src="/code.jpg">
+                    <input type="text" class="form-control" maxlength="4" placeholder="请输入图片中的字符串">
+                    <span class="input-group-addon" style="cursor:pointer">获取验证码</span>
+                    <span class="input-group-addon" style="display: none">重新发送60</span>
+                </div>
+                &lt;!&ndash;验证码&ndash;&gt;
+                    <input type="text" class="form-control" placeholder="请输入验证码">
+                &lt;!&ndash;密码&ndash;&gt;
+                    <input type="text" class="form-control" placeholder="请输入密码">
+            </div>-->
+            <div class="content">
+                <h2></h2>
+                <!--手机号-->
+                <input type="text" class="form-control" placeholder="请输入手机号">
+                <div class="input-group" style="margin-bottom: 10px">
+                    <canvas  class="J_codeimg" id="myCanvas" onclick="createCode()">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
+
+                    <input id="J_codetext" type="text" class="form-control" maxlength="4" placeholder="请输入图片中的字符串">
+                    <span id="submit_btn" class="input-group-addon" style="cursor:pointer" onClick="validate();">获取验证码</span>
+                    <span class="input-group-addon" style="display: none">重新发送60</span>
+                </div>
+                <!--验证码-->
+                <input type="text" class="form-control" placeholder="请输入验证码">
+                <!--密码-->
+                <input type="text" class="form-control" placeholder="请输入密码">
+            </div>
+            <!--验证码结束-->
+
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> <a href="reg.html">您确认并同意到位用户协议</a>
+                </label>
+            </div>
+            <!--警告按钮-->
+            <div class="alert alert-danger alert-dismissible alertMsg">
+                您确认并同意到位用户协议！
+                <button type="button" class="close">
+                    <span>×</span>
+                </button>
+            </div>
+            <!--登录按钮-->
+            <div class="loginBtn">
+                <button class="btn btn-primary btn-lg btn-block ">登录</button>
+            </div>
+            <div class="already">
+                <a class="" href="#">已有账户？登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showCheck(a){
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "white";
+        ctx.clearRect(0,0,1000,1000);
+        ctx.font = "80px 'Microsoft Yahei'";
+        ctx.fillText(a,50,100);
+
+
+    }
+    var code ;
+    function createCode(){
+        code = "";
+        var codeLength = 4;
+        var selectChar = new Array(1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','j','k','l','m','n','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z');
+        for(var i=0;i<codeLength;i++) {
+            var charIndex = Math.floor(Math.random()*60);
+            code +=selectChar[charIndex];
+        }
+        if(code.length != codeLength){
+            createCode();
+        }
+        showCheck(code);
+    }
+
+    function validate () {
+        var inputCode = document.getElementById("J_codetext").value.toUpperCase();
+        var codeToUp=code.toUpperCase();
+        if(inputCode.length <=0) {
+            document.getElementById("J_codetext").setAttribute("placeholder","输入验证码");
+            createCode();
+            return false;
+        }
+        else if(inputCode != codeToUp ){
+            document.getElementById("J_codetext").value="";
+            document.getElementById("J_codetext").setAttribute("placeholder","验证码错误");
+            createCode();
+            return false;
+        }
+        else {
+            window.open(document.getElementById("J_down").getAttribute("data-link"));
+            document.getElementById("J_codetext").value="";
+            createCode();
+            return true;
+        }
+
+    }
+    $(document).ready(function() {
+        //验证码
+        createCode();
+        //测试提交，对接程序删除即可
+        $("#submit_btn").click(function(){
+            location.href="javascrpt:;"/*tpa=http://***index.html*/;
+        });
+    });
+</script>
+</body>
+</html>
