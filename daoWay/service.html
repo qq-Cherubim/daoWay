@@ -14,13 +14,31 @@
         *{
             font-family: "Microsoft YaHei","SimSun"!important;
         }
+        .navbar-default.navbar-transparent.navbar-fixed-top {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .12);
+            -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .12);
+        }
+        .navbar-default, .navbar-default .dropdown-menu, .navbar-default.navbar-transparent.navbar-fixed-top, .navbar-fixed-bottom.navbar-default {
+            background-color: rgba(255, 255, 255, .96);
+        }
+        .fixed-animated {
+            -webkit-animation-name: fixedHeader;
+            animation-name: fixedHeader;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-transform-origin: center top;
+            -ms-transform-origin: center top;
+            transform-origin: center top;
+
+        }
         /*头部*/
         .container {
             width: 1200px;
             margin: 0 auto;
+            height:70px;
         }
         header{
-            height:65px;
+            height:70px;
             background: #fff;
             border-bottom:  1px solid #e5e5e5;
         }
@@ -258,7 +276,7 @@
 <!--头部-->
 <header>
     <div>
-        <nav>
+        <nav class="navbar navbar-default  navbar-transparent " role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand navbar-brand-img" href="#">
@@ -444,7 +462,14 @@
     <p>北京邻家科技有限公司  </p>
 </div>
 <script type="text/javascript">
-
+    //导航
+    $(window).scroll(function (){
+        if ($(window).scrollTop()>70) {
+            $('nav').addClass('navbar-fixed-top fixed-animated')
+        }else{
+            $('nav').removeClass('navbar-fixed-top fixed-animated')
+        }
+    });
 
 </script>
 </body>
